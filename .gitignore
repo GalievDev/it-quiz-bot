@@ -1,6 +1,6 @@
 /tmp
 /out-tsc
-.env
+/.env
 
 /node_modules
 npm-debug.log*
