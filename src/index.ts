@@ -1,7 +1,8 @@
-import {Bot, GrammyError, HttpError, Keyboard} from "grammy";
+import {Bot, GrammyError, HttpError, InlineKeyboard, Keyboard} from "grammy";
 import dotenv from "dotenv";
+import {getQuizByName} from "./service/fetcher";
 
-dotenv.config({path: "../.env"})
+console.log(dotenv.config())
 const bot = new Bot(process.env.TOKEN as string);
 
 const topics = [
@@ -24,7 +25,26 @@ bot.command("start", async (ctx) => {
 })
 
 bot.hears(topics.flat(), async (ctx) => {
+    const topic = ctx?.message?.text?.toLowerCase()!
+    const questions = await getQuizByName(topic)
 
+    const buttonRows = questions[0].options
+        .filter(option => option.text !== null)
+        .map(option => [
+        InlineKeyboard.text(
+            option?.text!!,
+            JSON.stringify({
+                type: `${ctx?.message?.text?.toLowerCase()!!}-option`,
+                isCorrect: option.isCorrect,
+                questionId: questions[0].id,
+            })
+        )
+    ])
+
+    let inlineKeyboard = InlineKeyboard.from(buttonRows)
+    await ctx.reply(questions[0].text, {
+        reply_markup: inlineKeyboard,
+    });
 })
 
 bot.catch((err) => {
