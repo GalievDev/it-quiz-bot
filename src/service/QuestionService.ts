@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 dotenv.config()
 const URL = "https://quizapi.io/api/v1/questions"
 const KEY = process.env.API_KEY as string
+let questions: Question[] = []
 
 // @ts-ignore
 async function getQuizByName(name: string, quantity?: number = 5): Promise<Question[]> {
@@ -23,17 +24,24 @@ async function getQuizByName(name: string, quantity?: number = 5): Promise<Quest
                 } as Option
             })
 
-            return {
+            const quest: Question = {
                 id: question.id,
                 text: question.question,
                 hasMultipleChoices: question.multiple_correct_answers,
                 options,
+                answer: question.explanation,
                 difficulty: question.difficulty,
             }
+            questions.push(quest)
+            return quest
         });
     } catch (error) {
         console.error(error)
     }
 }
 
-export { getQuizByName };
+function getAnswer(id: number): string | null | undefined {
+    return questions.find(question => question.id === id)?.answer
+}
+
+export { getQuizByName, getAnswer };
