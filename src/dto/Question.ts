@@ -5,5 +5,6 @@ export default interface Question {
     text: string,
     hasMultipleChoices: boolean,
     options: Option[],
+    answer: string | null,
     difficulty: string,
 }
