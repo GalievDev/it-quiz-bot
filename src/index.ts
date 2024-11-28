@@ -32,7 +32,12 @@ bot.hears(topics.flat(), async (ctx) => {
     const questions = await getQuizByName(topic)
     userSessions[ctx.chatId] = { topic: topic, currentIndex: 0, score: 0, quiz: questions, messageId: null }
 
-    await ctx.reply(`Starting the quiz on: ${topic}`)
+    await ctx.reply(`Starting the quiz on: ${topic}`, {
+        reply_markup: {
+            resize_keyboard: false,
+            remove_keyboard: true
+        }
+    })
     await sendQuestion(ctx, ctx.chatId)
 })
 
