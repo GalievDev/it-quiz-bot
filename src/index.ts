@@ -7,10 +7,10 @@ dotenv.config()
 const bot = new Bot(process.env.TOKEN as string);
 
 const topics = [
-    ['Linux', 'Bash', 'PHP', 'Docker', 'HTML'],
-    ['Postgres', 'MySQL', 'Laravel', 'Kubernetes', 'JavaScript'],
-    ['Python', 'Openshift', 'Terraform', 'React', 'Django'],
-    ['cPanel', 'Ubuntu', 'NodeJS', 'WordPress', 'Next.js'],
+    ['Linux', 'Bash', 'Docker'],
+    ['Postgres', 'Laravel', 'DevOps'],
+    ['cPanel', 'React', 'Django'],
+    ['NodeJS', 'WordPress', 'Next.js'],
 ]
 
 bot.command("start", async (ctx) => {
