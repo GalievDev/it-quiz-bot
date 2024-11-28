@@ -41,23 +41,25 @@ async function sendQuestion(ctx: any, chatId: number) {
     const { quiz, currentIndex } = session
     const question = quiz[currentIndex]
 
+    let message = `${currentIndex + 1}. ${question.text} \n\n`
     const buttonRows = question.options
         .filter(option => option.text !== null)
-        .map(option => [
-            InlineKeyboard.text(
-                option?.text!!,
+        .map((option, index) => {
+            let letter = String.fromCharCode(97 + index)
+            message += `${letter}. ${option?.text!!}\n`
+            return [InlineKeyboard.text(
+                `${letter}`,
                 JSON.stringify({
-                    type: `${ctx?.message?.text?.toLowerCase()!!}-option`,
                     isCorrect: option.isCorrect,
                     questionId: question.id
                 })
-            )
-        ])
+            )]
+        })
 
     console.log(question.options)
 
     let inlineKeyboard = InlineKeyboard.from(buttonRows)
-    const sentMessage = await ctx.reply(question.text, {
+    const sentMessage = await ctx.reply(`${message}`, {
         reply_markup: inlineKeyboard,
     });
     session.messageId = sentMessage.message_id
