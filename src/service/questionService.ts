@@ -1,7 +1,6 @@
 import axios from "axios";
-import Question from "../dto/Question";
-import Option from "../dto/Option";
 import dotenv from "dotenv";
+import {Option, Question} from "./types";
 
 dotenv.config()
 const URL = "https://quizapi.io/api/v1/questions"

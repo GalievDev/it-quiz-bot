@@ -1,5 +1,5 @@
 import {InlineKeyboard} from "grammy";
-import Question from "../dto/Question";
+import {Question} from "../service/types";
 
 const userSessions: Record<number, { topic: string; currentIndex: number; score: number; quiz: Question[], messageId: number | null }> = {};
 

@@ -1,6 +1,9 @@
-import Option from "./Option";
+export interface Option {
+    text: string | null,
+    isCorrect: boolean,
+}
 
-export default interface Question {
+export interface Question {
     id: number,
     text: string,
     hasMultipleChoices: boolean,
