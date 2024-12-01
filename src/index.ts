@@ -2,9 +2,13 @@ import {Bot, GrammyError, HttpError} from "grammy";
 import dotenv from "dotenv";
 import Handler from "./handler/mod"
 import Command from "./command/mod"
+import {AppDataSource} from "./dataSource";
 
 dotenv.config()
 const bot = new Bot(process.env.TOKEN as string);
+
+AppDataSource.initialize()
+    .catch((error) => console.log(error));
 
 bot.catch((err) => {
     const ctx = err.ctx;

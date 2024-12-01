@@ -1,6 +1,7 @@
 import {Composer} from "grammy";
 import helpers from "../utils/helpers"
 import {getAnswer} from "../service/questionService";
+import {userRepository} from "../command/types";
 
 const composer = new Composer();
 
@@ -28,6 +29,14 @@ composer.on('callback_query:data', async (ctx) => {
     }
 
     if (session.currentIndex >= quiz.length) {
+        let user = await userRepository.findOneByOrFail({ chatId: ctx?.chatId }).catch(() => {
+            throw new Error("User not found")
+        })
+        await userRepository.save({
+            chatId: user.chatId,
+            nickname: user.nickname,
+            score: user.score + session.score,
+        })
         await ctx.reply(`🎉 Quiz over! You scored ${session.score} out of ${quiz.length}.`)
         delete helpers.userSessions[ctx?.chatId!!]
     } else {

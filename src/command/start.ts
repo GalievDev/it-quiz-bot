@@ -1,4 +1,6 @@
 import {Composer, Keyboard} from "grammy";
+import {topics, userRepository} from "./types";
+import {User} from "../entity/User";
 
 const composer = new Composer();
 
@@ -8,15 +10,12 @@ interface UserState {
 
 const userState: Record<number, UserState> = {};
 
-const topics = [
-    ['Linux', 'Bash', 'Docker'],
-    ['Postgres', 'Laravel', 'DevOps'],
-    ['cPanel', 'React', 'Django'],
-    ['NodeJS', 'WordPress', 'Next.js'],
-]
-
 composer.command("start", async (ctx) => {
     const userId = ctx?.from?.id!!;
+
+    if (await userRepository.exists({ where: { chatId: ctx?.chatId } })) {
+        return await ctx.reply("You are already registered! \nType /quiz command to start a new quiz");
+    }
 
     userState[userId] = { step: 'awaiting_nickname' };
 
@@ -37,7 +36,12 @@ composer.on("message", async (ctx) => {
             return;
         }
 
-        // Save the user to the database here
+        let user = new User();
+        user.chatId = ctx?.chatId;
+        user.nickname = nickname;
+        user.score = 0
+
+        await userRepository.save(user);
 
         const startKeyboard = topics.reduce((keyboard, row) => {
             row.forEach(text => keyboard.text(text));

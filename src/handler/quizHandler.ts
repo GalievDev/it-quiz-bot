@@ -1,15 +1,9 @@
 import {Composer} from "grammy";
 import helpers from "../utils/helpers";
 import {getQuizByName} from "../service/questionService";
+import {topics} from "../command/types";
 
 const composer = new Composer();
-
-const topics = [
-    ['Linux', 'Bash', 'Docker'],
-    ['Postgres', 'Laravel', 'DevOps'],
-    ['cPanel', 'React', 'Django'],
-    ['NodeJS', 'WordPress', 'Next.js'],
-]
 
 composer.hears(topics.flat(), async (ctx) => {
     const topic = ctx?.message?.text?.toLowerCase()!
