@@ -11,4 +11,7 @@ export class User {
 
     @Column()
     score: number = 0
+
+    @Column()
+    takenQuizzes: number = 0
 }
