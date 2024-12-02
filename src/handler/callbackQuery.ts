@@ -36,8 +36,9 @@ composer.on('callback_query:data', async (ctx) => {
             chatId: user.chatId,
             nickname: user.nickname,
             score: user.score + session.score,
+            takenQuizzes: user.takenQuizzes + 1
         })
-        await ctx.reply(`🎉 Quiz over! You scored ${session.score} out of ${quiz.length}.`)
+        await ctx.reply(`🎉 Quiz over! You scored ${session.score} out of ${quiz.length}. \nType /quiz to start a new quiz!`)
         delete helpers.userSessions[ctx?.chatId!!]
     } else {
         await helpers.sendQuestion(ctx, ctx?.chatId!!)

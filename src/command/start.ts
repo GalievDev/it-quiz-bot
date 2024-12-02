@@ -40,6 +40,7 @@ composer.on("message", async (ctx) => {
         user.chatId = ctx?.chatId;
         user.nickname = nickname;
         user.score = 0
+        user.takenQuizzes = 0
 
         await userRepository.save(user);
 
