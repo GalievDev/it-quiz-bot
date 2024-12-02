@@ -5,7 +5,6 @@
    "main": "index.ts",
    "scripts": {
       "start": "ts-node src/index.ts",
-      "build": "tsc",
       "typeorm": "typeorm-ts-node-commonjs"
    },
    "dependencies": {
