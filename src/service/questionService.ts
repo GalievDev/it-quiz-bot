@@ -8,9 +8,21 @@ const KEY = process.env.API_KEY as string
 let questions: Question[] = []
 
 // @ts-ignore
-async function getQuizByName(name: string, quantity?: number = 5): Promise<Question[]> {
+async function getQuizByName(name: string, difficulty: string): Promise<Question[]> {
     try {
-        const response = await axios.get(`${URL}?apiKey=${KEY}&limit=${quantity}&category=${name}`)
+        let quantity = 0
+        switch (difficulty) {
+            case "easy":
+                quantity = 10
+                break
+            case "medium":
+                quantity = 20
+                break
+            case "hard":
+                quantity = 30
+                break
+        }
+        const response = await axios.get(`${URL}?apiKey=${KEY}&limit=${quantity}&category=${name}&difficulty=${difficulty}`)
 
         return response.data.map((question: any) => {
             const options = Object.keys(question.answers).map(key => {
