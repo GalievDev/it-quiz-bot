@@ -8,8 +8,8 @@ const composer = new Composer();
 const difficulties = ["easy", "medium", "hard"]
 
 composer.hears(topics.flat(), async (ctx) => {
-    const topic = ctx?.message?.text?.toLowerCase()!
-    helpers.userSessions[ctx.chatId] = { topic: topic, currentIndex: 0, score: 0, quiz: [], messageId: null }
+    const topic = ctx?.message?.text!!
+    helpers.userSessions[ctx.chatId] = { topic: topic.toLowerCase(), currentIndex: 0, score: 0, quiz: [], messageId: null }
 
     if (!topics.flat().includes(topic)) {
         await ctx.reply("This topic does not correspond to the topics below")
