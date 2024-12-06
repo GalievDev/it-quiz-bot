@@ -54,3 +54,8 @@
 - Start the bot by sending /start in Telegram.
 - Select a category and difficulty level to begin the quiz.
 - Answer the questions and get immediate feedback.
+
+![image](https://github.com/user-attachments/assets/e35e753e-e305-4cd2-8da0-e4b9a04ec9d8)
+
+![image](https://github.com/user-attachments/assets/83a89223-ab5c-49bf-a382-3e26d9caa381)
+
